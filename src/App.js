@@ -1,11 +1,11 @@
 import React from 'react';
 
-function App() {
+import Routes from './routes';
+
+export default function App() {
   return (
     <div className="App">
-      <h1>Single Room Chat with adonis websocket api and React</h1>
+      <Routes />
     </div>
   );
 }
-
-export default App;
