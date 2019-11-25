@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Container,
@@ -13,18 +13,26 @@ import {
 import api from '../../services/api';
 
 export default function Main() {
-  async function handleSubmit(data) {
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+
+  // messages list
+  const [messages, setMessages] = useState([]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
     const id = 7;
 
-    const response = await api
-      .post(`rooms/${id}`, {
-        name: data.name,
-        message: data.message,
-      })
-      .then(result => {
-        console.log(result.data);
-        console.log(response);
-      });
+    // msg to store
+    const { data: msg } = await api.post(`/rooms/${id}`, {
+      name,
+      message,
+    });
+
+    console.log(msg, 'test');
+
+    setMessages({ messages: [...messages, msg], message: '' });
   }
 
   return (
@@ -33,7 +41,14 @@ export default function Main() {
         <Col>
           <FormGroup>
             <Label>Nome</Label>
-            <Input type="text" name="name" id="name" placeholder="seu nome" />
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="seu nome"
+              onChange={e => setName(e.target.value)}
+              value={name}
+            />
           </FormGroup>
         </Col>
         <Col>
@@ -44,6 +59,8 @@ export default function Main() {
               name="message"
               id="message"
               placeholder="sua mensagem"
+              onChange={e => setMessage(e.target.value)}
+              value={message}
             />
           </FormGroup>
         </Col>
