@@ -22,6 +22,7 @@ export default function Main() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    // create route in api to get room id
     const id = 7;
 
     // msg to store
@@ -29,8 +30,6 @@ export default function Main() {
       name,
       message,
     });
-
-    console.log(msg, 'test');
 
     setMessages({ messages: [...messages, msg], message: '' });
   }
